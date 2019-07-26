@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: avsb
+Build-Jdk: 11.0.3
+Implementation-Title: spring5-reactive-mongo-recipe-app
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: guru.springframework
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/spring5-reactive-mongo-recipe-app
+Created-By: Maven Integration for Eclipse
+
