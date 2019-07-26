@@ -45,7 +45,7 @@ public class IngredientController {
 	public String showIngredients(@PathVariable String recipeId, @PathVariable String id, Model model) {
 
 		model.addAttribute("ingredient",
-				ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
+				ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
 
 		return "recipe/ingredient/show";
 	}
@@ -65,7 +65,7 @@ public class IngredientController {
 		// init uom
 		ingredientCommand.setUom(new UnitOfMeasureCommand());
 
-		model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+		model.addAttribute("uomList", unitOfMeasureService.listAllUoms().collectList().block());
 
 		return "recipe/ingredient/ingredientform";
 	}
@@ -73,15 +73,15 @@ public class IngredientController {
 	@GetMapping("recipe/{recipeId}/ingredient/{id}/update")
 	public String updateRecipeIngredient(@PathVariable String recipeId, @PathVariable String id, Model model) {
 		model.addAttribute("ingredient",
-				ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
+				ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
 
-		model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+		model.addAttribute("uomList", unitOfMeasureService.listAllUoms().collectList().block());
 		return "recipe/ingredient/ingredientform";
 	}
 
 	@PostMapping("recipe/{recipeId}/ingredient")
 	public String saveOrUpdate(@ModelAttribute IngredientCommand command) {
-		IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+		IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
 		log.debug("saved receipe id:" + savedCommand.getRecipeId());
 		log.debug("saved ingredient id:" + savedCommand.getId());
@@ -93,7 +93,7 @@ public class IngredientController {
 	public String deleteIngredient(@PathVariable String recipeId, @PathVariable String id) {
 		log.debug("Deleting ingredient id: " + id);
 
-		ingredientService.deleteById(recipeId, id);
+		ingredientService.deleteById(recipeId, id).block();
 
 		return "redirect:/recipe/" + recipeId + "/ingredients";
 	}

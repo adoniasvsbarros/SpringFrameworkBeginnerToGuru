@@ -39,7 +39,8 @@ public class CategoryReactiveRepositoryTest {
 	public void testFindByDescription() throws Exception{
 		Category category = new Category();
 		category.setDescription("Foo");
-		
+
+		categoryReactiveRepository.save(category).block();
 		Category fetchedCat = categoryReactiveRepository.findByDescription("Foo").block();
 		
 		assertNotNull(fetchedCat.getId());
